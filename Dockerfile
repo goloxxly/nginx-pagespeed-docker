@@ -1,6 +1,6 @@
-FROM nginx:1.14.0
+FROM nginx:1.13.9
 
-ENV NGINX_VERSION 1.14.0
+ENV NGINX_VERSION 1.13.9
 ENV NPS_VERSION 1.13.35.2-stable
 ENV OSSL_VERSION 1.1.0h
 ENV CODENAME stretch
@@ -19,10 +19,10 @@ WORKDIR /nginx
 
 ADD ./build.sh build.sh
 
-RUN chmod a+x ./build.sh && ./build.sh
+RUN chmod a+x ./build.sh; sync; ./build.sh
 
 
 
-FROM nginx:1.14.0
-COPY --from=0 /nginx/nginx_1.14.0-1~stretch_amd64.deb /nginx-pagespeed.deb
+FROM nginx:1.13.9
+COPY --from=0 /nginx/nginx_1.13.9-1~stretch_amd64.deb /nginx-pagespeed.deb
 RUN dpkg --install /nginx-pagespeed.deb && rm /nginx-pagespeed.deb
